@@ -1,0 +1,12 @@
+.injectedMd {
+  @apply w-[85%] m-auto;
+  h1 {
+  }
+  img {
+    @apply text-center object-center m-auto;
+  }
+}
+
+.injectedMd:not(:first-child) {
+  @apply border-b border-gray-300 pb-5 mb-16 bg-pink-200;
+}

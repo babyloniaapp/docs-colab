@@ -1,0 +1,23 @@
+a {
+  text-decoration: none !important;
+  color: rgba(255, 70, 66, 1) !important;
+  cursor: pointer;
+}
+a:hover {
+  /* text-decoration: underline !important; */
+  font-weight: bold;
+  color: rgb(255, 66, 62) !important;
+}
+.inject h1 {
+  display: none;
+}
+.logo-wrapper {
+  /* width: 50%;
+  height: 50%;*/
+  /* width: 99vw; */
+  text-align: center;
+}
+
+.logo-wrapper img {
+  width: 120px;
+}
