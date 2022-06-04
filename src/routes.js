@@ -12,21 +12,8 @@ import WorkRoundedIcon from "@mui/icons-material/WorkRounded";
 import BarChartRoundedIcon from "@mui/icons-material/BarChartRounded";
 import DonutLargeRoundedIcon from "@mui/icons-material/DonutLargeRounded";
 import BuildRoundedIcon from "@mui/icons-material/BuildRounded";
-import $ from "jquery";
-import { marked } from "marked";
 
 const routes = () => {
-  // useEffect(() => {
-  fetch("https://raw.githubusercontent.com/afraz-malik/docs/main/SUMMARY.md")
-    .then((res) => res.text())
-    .then((res) => {
-      let changedres = res.replace(/["'(]/g, "(/");
-      $(".inject").empty();
-      var $log = $(".inject"),
-        html = $.parseHTML(marked.parse(`${changedres}`));
-      $log.append(html);
-    });
-  // }, []);
   return [
     {
       text: "Dashboard",

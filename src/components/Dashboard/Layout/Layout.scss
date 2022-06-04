@@ -42,3 +42,22 @@
   /* width: 101.9% !important; */
   /* background-color: #fff; */
 }
+.inject {
+  ul {
+    border-left: 1px solid lightgrey;
+    li {
+      @apply px-1;
+      a {
+        @apply py-4  w-full flex whitespace-normal;
+
+        &:hover {
+          @apply bg-gray-200;
+        }
+      }
+      ul {
+        // height: 0;
+        // display: none;
+      }
+    }
+  }
+}

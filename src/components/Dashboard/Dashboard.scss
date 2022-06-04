@@ -1,9 +1,29 @@
 .injectedMd {
-  @apply w-[85%] m-auto;
+  font-weight: bold;
+  @apply w-[85%] m-auto pb-8;
+  border-bottom: 1px solid lightgrey;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Source Sans Pro", sans-serif !important;
+  }
+  p {
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  }
   h1 {
+    // @apply w-[100%];
+    // display: none;
+    @apply border-b border-gray-200 py-6 pb-10 text-5xl;
   }
   img {
-    @apply text-center object-center m-auto;
+    @apply text-center object-center my-12 m-auto;
+  }
+  h3 {
+    @apply my-6;
   }
 }
 

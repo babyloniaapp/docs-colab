@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import useTheme from "@mui/material/styles/useTheme";
 import styled from "@mui/material/styles/styled";
 import Box from "@mui/material/Box";
@@ -18,6 +18,9 @@ import {
   primaryColor,
   dark,
 } from "../../Helpers/GlobalVariables";
+import $ from "jquery";
+import Markdown from "markdown-to-jsx";
+
 import SearchSharpIcon from "@mui/icons-material/SearchSharp";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import items from "../../../routes";
@@ -28,7 +31,11 @@ import Switch from "../../UI/Switch.js";
 import Typography from "../../UI/Typography";
 import { Divider } from "@mui/material";
 // import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
-const drawerWidth = 280;
+import ReactMarkdown from "react-markdown";
+import { marked } from "marked";
+import { action } from "../../../redux/actions.js";
+import { useDispatch } from "react-redux";
+const drawerWidth = 320;
 const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
@@ -130,54 +137,30 @@ const Layout = ({ children }) => {
     getCurrentActiveTabs(child);
     navigate(child.path);
   };
+  const [md, setmd] = useState(``);
+  useEffect(() => {
+    fetch("https://raw.githubusercontent.com/afraz-malik/docs/main/SUMMARY.md")
+      .then((res) => res.text())
+      .then((res) => {
+        // let changedres = res.replace(/["'(]/g, "(/");
+
+        // let md = marked.parse(`${changedres}`);
+        // $(".inject").empty();
+        // var $log = $(".inject"),
+        //   html = $.parseHTML(md);
+        // $log.append(html);
+        setmd(res);
+      });
+    window.addEventListener("click", function (e) {
+      console.log(e.target);
+      // if (e.target && e.target.matches("li.item")) {
+      // e.target.className = "foo"; // new class name here
+      // }
+    });
+  }, []);
 
   return (
     <Box sx={{ display: "flex", maxWidth: "100%", width: "100%" }}>
-      <CssBaseline />
-      {/* 
-        <AppBar
-          position="fixed"
-          open={open}
-          style={{
-            boxShadow: "none",
-            borderBottom: "1px solid #e3e3e3",
-          }}>
-          {
-            <Toolbar
-              style={{
-                width: "100%",
-                backgroundColor: "#fff",
-              }}>
-              {activeTab.map((tab, index) => (
-                <Typography
-                  fontSize={11}
-                  key={index}
-                  className="breadcrumbs-container"
-                  color={index > 1 ? darkGray : "primary"}>
-                  {index > 1 ? (
-                    <ArrowRightRoundedIcon
-                      sx={{ fontSize: 16, fontColor: darkGray }}
-                    />
-                  ) : (
-                    ""
-                  )}
-
-                  {capitalizeFirstLetter(tab.replace("-", " "))}
-                </Typography>
-              ))}
-              <Button
-                className="mr-5"
-                color="primary"
-                variant="contained"
-                fullWidth={false}
-                style={{ textTransform: "none", marginLeft: "auto" }}
-                disabled={false}
-                onClick={logoutButtonClicked}>
-                Logout
-              </Button>
-            </Toolbar>
-          }
-        </AppBar> */}
       <Drawer variant="permanent" open={open}>
         {" "}
         <div
@@ -213,8 +196,24 @@ const Layout = ({ children }) => {
           )}
         </div>
         <Divider />
+        <div className="inject overflow-y-auto overflow-x-hidden">
+          <Markdown
+            options={{
+              overrides: {
+                a: {
+                  component: MyParagraph,
+                  props: {
+                    className: "foo",
+                  },
+                },
+              },
+            }}>
+            {md}
+          </Markdown>
+        </div>
+        {/*
         <List>
-          {/* {items.map((item, index) => {
+           {items.map((item, index) => {
               return (
                 <div key={index}>
                   <ListItemButton
@@ -307,9 +306,8 @@ const Layout = ({ children }) => {
                   ))}
                 </div>
               );
-            })} */}
-          <div className="inject"></div>
-          <div className="profile-container">
+            })} 
+            <div className="profile-container">
             <div className="row align-items-center m-3">
               <div className="col-2 p-1">
                 <Switch onClick={handleDrawerToggle} />
@@ -324,9 +322,8 @@ const Layout = ({ children }) => {
             </div>
           </div>
         </List>
+           */}
       </Drawer>
-      {/* <DrawerHeader /> */}
-
       <Box
         component="main"
         sx={{
@@ -337,12 +334,24 @@ const Layout = ({ children }) => {
         }}>
         <Box
           component="main"
-          sx={{ flexGrow: 1, width: "102.3%", padding: "20px 50px" }}>
+          sx={{
+            flexGrow: 1,
+            width: "102.3%",
+            padding: "20px 50px",
+          }}>
           {children}
         </Box>
       </Box>
     </Box>
   );
+};
+const MyParagraph = ({ children, ...props }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(action(children[0]));
+  }, []);
+
+  return <Link to={props.href}>{children}</Link>;
 };
 
 export default Layout;
