@@ -1,6 +1,6 @@
 //THEME COLORS GLOBAL SETTINGS
-const primaryColor = "rgba(255,70,66,1.00)";
-const secondaryColor = "#A1A4AC";
+const primaryColor = "rgb(255, 70, 66)";
+const secondaryColor = "pink";
 const darkGray = "#6A6D78";
 const dark = "#383838";
 const danger = "#B70625";

@@ -1,7 +1,11 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: "rgb(255, 70, 66)",
+      },
+    },
   },
   plugins: [
     require("tailwindcss"),

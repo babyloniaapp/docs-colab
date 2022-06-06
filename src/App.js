@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import createTheme from "@mui/material/styles/createTheme";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -11,11 +11,8 @@ import {
   danger,
 } from "./components/Helpers/GlobalVariables";
 import Layout from "./components/Dashboard/Layout/Layout";
-import Neue from "./assets/fonts/Neue.ttf";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import items from "./routes";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Spinner } from "./components/UI/Spinner/Spinner.jsx";
-import "./App.css";
 import Dashboard from "./components/Dashboard/Dashboard.js";
 const theme = createTheme({
   palette: {
@@ -31,7 +28,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: [Neue].join(","),
+    // fontFamily: [Neue].join(","),
   },
   MuiTypography: {
     defaultProps: {

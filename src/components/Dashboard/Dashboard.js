@@ -2,12 +2,22 @@ import React, { useEffect, useState } from "react";
 import { marked } from "marked";
 import $ from "jquery";
 import "./Dashboard.scss";
-import { useLocation } from "react-router-dom";
-import { Spinner } from "../UI/Spinner/Spinner.jsx";
-const Dashboard = (props) => {
+import { useLocation, useNavigate } from "react-router-dom";
+import { InsideSpinner, Spinner } from "../UI/Spinner/Spinner.jsx";
+import { useSelector } from "react-redux";
+
+const Dashboard = () => {
   const location = useLocation();
   const [state, setstate] = useState(false);
-  console.log(location);
+  const navigate = useNavigate();
+  const values = useSelector((state) => state.items);
+  const indexedValues = values.map((value, idx) => ({ ...value, id: idx + 1 }));
+  let currentValue = indexedValues.filter((value) => {
+    return value.link === location.pathname.slice(1);
+  })[0];
+  if (location.pathname === "/README.md" || location.pathname === "/") {
+    currentValue = indexedValues[0];
+  }
   useEffect(() => {
     setstate(false);
     fetch(
@@ -28,12 +38,45 @@ const Dashboard = (props) => {
   return (
     <>
       {!state ? (
-        <Spinner />
+        <div className="flex items-center justify-center h-[90vh]">
+          <InsideSpinner />
+        </div>
       ) : (
-        <>
+        <div className="dashboard">
           <div className="injectedMd"></div>
-          <div className=""></div>
-        </>
+          <div className="flex gap-5 my-8">
+            {currentValue?.id !== 1 && (
+              <div
+                className="cursor-pointer border border-gray-200 group text-right hover:!border-primary  rounded-md w-full flex items-center justify-between p-3"
+                onClick={() => navigate(values[currentValue?.id - 2].link)}>
+                <div className="text-2xl group-hover:text-primary">
+                  <i class="fa-solid fa-arrow-left"></i>
+                </div>
+                <div>
+                  <div className="text-gray-400">Previous</div>
+                  <div className="font-semibold group-hover:text-primary">
+                    {values[currentValue?.id - 2]?.name}
+                  </div>
+                </div>
+              </div>
+            )}
+            {currentValue?.id !== values.length && (
+              <div
+                className="cursor-pointer border border-gray-200 group hover:!border-primary  rounded-md w-full flex items-center justify-between p-3"
+                onClick={() => navigate(values[currentValue?.id].link)}>
+                <div>
+                  <div className="text-gray-400">Next</div>
+                  <div className="font-semibold group-hover:text-primary">
+                    {values[currentValue?.id]?.name}
+                  </div>
+                </div>
+                <div className="text-2xl group-hover:text-primary">
+                  <i class="fa-solid fa-arrow-right"></i>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       )}
     </>
   );

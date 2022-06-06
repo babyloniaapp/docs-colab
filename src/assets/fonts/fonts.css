@@ -1,7 +1,0 @@
-@font-face {
-  font-family: "MaisonNeue";
-  src: local("MaisonNeue"), url("./Maison Neue Bold.ttf") format("tff"),
-    url("./Maison Neue Book.ttf") format("tff"),
-    url("./Maison Neue Light.ttf") format("tff"),
-    url("./Neue.ttf") format("tff");
-}
