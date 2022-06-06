@@ -4,11 +4,12 @@ import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import Markdown from "markdown-to-jsx";
 import SearchSharpIcon from "@mui/icons-material/SearchSharp";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import "./Layout.scss";
-import { Divider } from "@mui/material";
+import { Divider, TextField } from "@mui/material";
 import { action } from "../../../redux/actions.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Autocomplete from "@mui/material/Autocomplete";
 
 const drawerWidth = 300;
 const openedMixin = (theme) => ({
@@ -32,26 +33,40 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const Layout = ({ children }) => {
+  const values = useSelector((state) => state.items);
+  const navigate = useNavigate();
   const [md, setmd] = useState(``);
   useEffect(() => {
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    // var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function () {
+      modal.style.display = "block";
+    };
+
+    // When the user clicks on <span> (x), close the modal
+    // span.onclick = function () {
+    // modal.style.display = "none";
+    // };
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    };
     fetch("https://raw.githubusercontent.com/afraz-malik/docs/main/SUMMARY.md")
       .then((res) => res.text())
       .then((res) => {
-        // let changedres = res.replace(/["'(]/g, "(/");
-
-        // let md = marked.parse(`${changedres}`);
-        // $(".inject").empty();
-        // var $log = $(".inject"),
-        //   html = $.parseHTML(md);
-        // $log.append(html);
         setmd(res);
       });
-    window.addEventListener("click", function (e) {
-      console.log(e.target);
-      // if (e.target && e.target.matches("li.item")) {
-      // e.target.className = "foo"; // new class name here
-      // }
-    });
   }, []);
 
   return (
@@ -77,7 +92,10 @@ const Layout = ({ children }) => {
                 babylonia.app
               </h4>
             </Link>
-            <SearchSharpIcon className="hover:text-primary cursor-pointer" />
+            <SearchSharpIcon
+              className="hover:text-primary cursor-pointer"
+              id="myBtn"
+            />
           </div>
         </div>
         <Divider />
@@ -115,6 +133,35 @@ const Layout = ({ children }) => {
           {children}
         </Box>
       </Box>
+      <div id="myModal" className="modal">
+        {/* <!-- Modal content --> */}
+        <div className="modal-content">
+          <div className="modal-body p-5 relative ">
+            {/* <span className="close text-black absolute top-[-20px] right-[15px]">
+              &times;
+            </span> */}
+            <Autocomplete
+              id="free-solo-demo"
+              freeSolo
+              disableClearable
+              onChange={(event, newValue) => {
+                navigate(values.filter((val) => val.name === newValue)[0].link);
+                document.getElementById("myModal").style.display = "none";
+              }}
+              options={values.map((option) => option.name)}
+              renderInput={(params, id) => {
+                return (
+                  <TextField
+                    key={id}
+                    {...params}
+                    label="What are you looking for?"
+                  />
+                );
+              }}
+            />
+          </div>
+        </div>
+      </div>
     </Box>
   );
 };
