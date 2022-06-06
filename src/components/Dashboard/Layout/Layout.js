@@ -10,6 +10,7 @@ import { Divider, TextField } from "@mui/material";
 import { action } from "../../../redux/actions.js";
 import { useDispatch, useSelector } from "react-redux";
 import Autocomplete from "@mui/material/Autocomplete";
+import { githubURL } from "../../Helpers/GlobalVariables.js";
 
 const drawerWidth = 300;
 const openedMixin = (theme) => ({
@@ -62,7 +63,7 @@ const Layout = ({ children }) => {
         modal.style.display = "none";
       }
     };
-    fetch("https://raw.githubusercontent.com/afraz-malik/docs/main/SUMMARY.md")
+    fetch(`${githubURL}SUMMARY.md`)
       .then((res) => res.text())
       .then((res) => {
         setmd(res);

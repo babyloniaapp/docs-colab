@@ -10,7 +10,7 @@ const disabledButtonText = "#ffffff";
 const success = "#388E3D";
 const lightGray = "#c7c7ca";
 const green = "#388E3D";
-
+const githubURL = "https://raw.githubusercontent.com/babyloniaapp/docs/main/";
 //GLOBAL THEME STYLE SETTING
 const iconStyling1 = { color: secondaryColor };
 const iconStyling2 = { color: primaryColor };
@@ -20,6 +20,7 @@ export {
   secondaryColor,
   darkGray,
   dark,
+  githubURL,
   danger,
   red,
   disabledButton,

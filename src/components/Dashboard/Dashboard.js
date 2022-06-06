@@ -5,6 +5,7 @@ import "./Dashboard.scss";
 import { useLocation, useNavigate } from "react-router-dom";
 import { InsideSpinner, Spinner } from "../UI/Spinner/Spinner.jsx";
 import { useSelector } from "react-redux";
+import { githubURL } from "../Helpers/GlobalVariables.js";
 
 const Dashboard = () => {
   const location = useLocation();
@@ -21,7 +22,7 @@ const Dashboard = () => {
   useEffect(() => {
     setstate(false);
     fetch(
-      `https://raw.githubusercontent.com/afraz-malik/docs/main/${
+      `${githubURL}${
         location.pathname === "/" ? "README.md " : location.pathname
       }`
     )
