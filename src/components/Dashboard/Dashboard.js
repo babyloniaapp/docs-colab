@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { marked } from "marked";
-import $ from "jquery";
 import "./Dashboard.scss";
 import { useLocation, useNavigate } from "react-router-dom";
 import { InsideSpinner, Spinner } from "../UI/Spinner/Spinner.jsx";
 import { useSelector } from "react-redux";
 import { githubURL } from "../Helpers/GlobalVariables.js";
+import Markdown from "markdown-to-jsx";
 
 const Dashboard = () => {
   const location = useLocation();
   const [state, setstate] = useState(false);
   const navigate = useNavigate();
+  const [md, setmd] = useState("");
   const values = useSelector((state) => state.items);
   const indexedValues = values.map((value, idx) => ({ ...value, id: idx + 1 }));
   let currentValue = indexedValues.filter((value) => {
@@ -28,11 +28,12 @@ const Dashboard = () => {
     )
       .then((res) => res.text())
       .then((res) => {
-        $(".injectedMd").empty();
         setstate(true);
-        var $log = $(".injectedMd"),
-          html = $.parseHTML(marked.parse(`${res}`));
-        $log.append(html);
+        setmd(res);
+        // $(".injectedMd").empty();
+        // var $log = $(".injectedMd"),
+        //   html = $.parseHTML(marked.parse(`${res}`));
+        // $log.append(html);
       });
   }, [location.pathname]);
 
@@ -44,7 +45,9 @@ const Dashboard = () => {
         </div>
       ) : (
         <div className="dashboard">
-          <div className="injectedMd"></div>
+          <div className="injectedMd">
+            <Markdown>{md}</Markdown>
+          </div>
           <div className="flex gap-5 my-8">
             {currentValue?.id !== 1 && (
               <div

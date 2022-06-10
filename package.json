@@ -23,7 +23,6 @@
     "dayjs": "^1.11.2",
     "jquery": "^3.6.0",
     "markdown-to-jsx": "^7.1.7",
-    "marked": "^4.0.16",
     "material-ui-phone-number": "^3.0.0",
     "phone": "^3.1.19",
     "postcss-nested": "^5.0.6",
