@@ -16,6 +16,7 @@ const Dashboard = () => {
   let currentValue = indexedValues.filter((value) => {
     return value.link === location.pathname.slice(1);
   })[0];
+  console.log(location.pathname.slice(1));
   if (location.pathname === "/README.md" || location.pathname === "/") {
     currentValue = indexedValues[0];
   }

@@ -180,7 +180,7 @@ const LinkGen = ({ children, ...props }) => {
           )
           .replace(/\s+/g, " ")
           .trim(),
-        link: props.href,
+        link: props.href.slice(0, 1) === "/" ? props.href.slice(1) : props.href,
       })
     );
   }, []);

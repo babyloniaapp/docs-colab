@@ -2,20 +2,29 @@
   @apply w-[85%] m-auto mb-8;
   border-bottom: 1px solid lightgrey;
   .injectedMd {
-    font-weight: bold;
+    a {
+      @apply text-primary no-underline;
+      &:hover {
+        @apply underline;
+      }
+    }
     h1,
     h2,
     h3,
     h4,
     h5,
     h6 {
+      font-weight: bold;
+      margin: 20px 0;
       // font-family: "Source Sans Pro", sans-serif !important;
       // font-family: "Press Start 2P", cursive;
     }
-    p {
+    p,
+    ol,
+    ul {
       // font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-      // "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
       font-weight: normal;
+      // "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
     }
     ol {
       list-style: numbers;
